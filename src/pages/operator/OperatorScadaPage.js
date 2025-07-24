@@ -12,8 +12,11 @@ const OperatorScadaPage = () => {
   const [runningWorkorders, setRunningWorkorders] = useState([]);
   const [summary, setSummary] = useState({});
 
-  const workstationId = parseInt(localStorage.getItem("workstationId"));
+  const workstationId = 1; //örnek sabit, ileride asagidaki gibi alınabilir.
+  //const workstationId = parseInt(localStorage.getItem("workstationId"));
   const operatorId = 1; // örnek sabit, ileride login sonrası alınabilir
+
+  console.log("scada dan selamlar");
 
   useEffect(() => {
     const fetchData = async () => {

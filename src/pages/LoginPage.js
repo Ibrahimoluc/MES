@@ -33,6 +33,7 @@ const LoginPage = () => {
       localStorage.setItem("username", username);
       localStorage.setItem("role", role);
 
+
       // Yönlendir
       switch (role) {
         case "operator":
