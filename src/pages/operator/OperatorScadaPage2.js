@@ -2,10 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { FaPause, FaCheck } from "react-icons/fa";
 import axios from "axios";
+import { useParams } from 'react-router-dom';
+
 
 const OperatorScadaPage2 = () => {
     //const [scodeGroups, setScodeGroups] = useState({});
-    const [selectedScode, setSelectedScode] = useState(10); // default: startup downtime
+    const [selectedScode, setSelectedScode] = useState(localStorage.getItem("initialSCode")); // default: startup downtime
     const [reason, setReason] = useState("");
     const [showModal, setShowModal] = useState(false);
     const [selectedNewWorkorder, setSelectedNewWorkorder] = useState("");
@@ -33,7 +35,11 @@ const OperatorScadaPage2 = () => {
             { id: 33, description: "PRODUCTION" },
         ]
     }
-    console.log(scodeGroups);
+    //console.log(scodeGroups);
+    //OperatorWorkorderPage den buraya navigate edilirken naviagete icinden alinan parametre
+    const initialSCode = localStorage.getItem("initialSCode");
+    console.log("route parameter:" + initialSCode);
+    console.log("init Selected SCode:" + selectedScode);
 
     //scodeEnum, dictionary şeklinde yap
     const sCodeEnum = {
@@ -43,8 +49,9 @@ const OperatorScadaPage2 = () => {
         10: "Startup Downtime"
     };
 
-    const workstationId = 4; //örnek sabit, ileride asagidaki gibi alınabilir.
-    //const workstationId = parseInt(localStorage.getItem("workstationId"));
+    //const workstationId = 4; //örnek sabit, ileride asagidaki gibi alınabilir.
+    const workstationId = parseInt(localStorage.getItem("workstationId"));
+    console.log("WorkstationId get from localstorage:" + workstationId);
     const operatorId = 1; // örnek sabit, ileride login sonrası alınabilir
 
     console.log("selamlar page2 den");
@@ -57,9 +64,12 @@ const OperatorScadaPage2 = () => {
 
         console.log("SignalR connection creating...");
         const signalR = require('@microsoft/signalr');
+        const workorderId = localStorage.getItem("workorderId");
+        const urlString = "http://localhost:5031/myHub?workorderId=" + workorderId;
+        console.log(urlString)
 
         const newConnection = new signalR.HubConnectionBuilder()
-            .withUrl("http://localhost:5031/myHub?workorderId=7")
+            .withUrl(urlString)
             .build();
 
         if (newConnection) {
@@ -123,8 +133,9 @@ const OperatorScadaPage2 = () => {
 
         //Temizlik (component unmount olunca bağlantıyı kapat)
         return () => {
-            connection.stop();
-            console.log("SignalR bağlantısı kapatıldı");
+            newConnection.stop().then(() => {
+                console.log("SignalR bağlantısı durduruldu");
+            });
         };
 
     }, []);

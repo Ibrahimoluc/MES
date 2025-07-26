@@ -8,6 +8,10 @@ import OperatorWorkorderPage from "./pages/operator/OperatorWorkorderPage";
 import OperatorWorkorderDetailPage from "./pages/operator/OperatorWorkorderDetailPage";
 import OperatorScadaPage from "./pages/operator/OperatorScadaPage";
 import OperatorScadaPage2 from "./pages/operator/OperatorScadaPage2";
+import OperatorWorkorderPage2 from "./pages/operator/OperatorWorkorderPage2";
+import OperatorHomePage2 from "./pages/operator/OperatorHomePage2";
+
+
 
 // Manager Pages
 import ManagerHomePage from "./pages/manager/ManagerHomePage";
@@ -37,25 +41,44 @@ const App = () => {
             <Route
                 path="/operator"
                 element={
-                    <ProtectedRoute allowedRoles={["operator"]}>
+                    //<ProtectedRoute allowedRoles={["operator"]}>
                         <MainLayout><OperatorHomePage /></MainLayout>
-                    </ProtectedRoute>
+                    //</ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/operator2"
+                element={
+                    //<ProtectedRoute allowedRoles={["operator"]}>
+                    <MainLayout><OperatorHomePage2 /></MainLayout>
+                    //</ProtectedRoute>
                 }
             />
             <Route
                 path="/operator/workorders"
                 element={
-                    <ProtectedRoute allowedRoles={["operator"]}>
+                    //<ProtectedRoute allowedRoles={["operator"]}>
                         <MainLayout><OperatorWorkorderPage /></MainLayout>
-                    </ProtectedRoute>
+                    //</ProtectedRoute>
                 }
             />
+
+            <Route
+                path="/operator/workorders2"
+                element={
+                    //<ProtectedRoute allowedRoles={["operator"]}>
+                    <MainLayout><OperatorWorkorderPage2 /></MainLayout>
+                    //</ProtectedRoute>
+                }
+            />
+
             <Route
                 path="/operator/workorders/:workorderId"
                 element={
-                    <ProtectedRoute allowedRoles={["operator"]}>
+                    //<ProtectedRoute allowedRoles={["operator"]}>
                         <MainLayout><OperatorWorkorderDetailPage /></MainLayout>
-                    </ProtectedRoute>
+                    //</ProtectedRoute>
                 }
             />
             <Route
@@ -89,25 +112,25 @@ const App = () => {
             <Route
                 path="/manager"
                 element={
-                    <ProtectedRoute allowedRoles={["manager"]}>
+                    //<ProtectedRoute allowedRoles={["manager"]}>
                         <MainLayout><ManagerHomePage /></MainLayout>
-                    </ProtectedRoute>
+                    //</ProtectedRoute>
                 }
             />
             <Route
                 path="/manager/workstations"
                 element={
-                    <ProtectedRoute allowedRoles={["manager"]}>
+                    //<ProtectedRoute allowedRoles={["manager"]}>
                         <MainLayout><ManagerWorkstationDetailsPage /></MainLayout>
-                    </ProtectedRoute>
+                    //</ProtectedRoute>
                 }
             />
             <Route
                 path="/manager/workers"
                 element={
-                    <ProtectedRoute allowedRoles={["manager"]}>
+                    //<ProtectedRoute allowedRoles={["manager"]}>
                         <MainLayout><ManagerTrackWorkerPage /></MainLayout>
-                    </ProtectedRoute>
+                    //</ProtectedRoute>
                 }
             />
 
@@ -115,9 +138,9 @@ const App = () => {
             <Route
                 path="/mps"
                 element={
-                    <ProtectedRoute allowedRoles={["mps"]}>
+                    //<ProtectedRoute allowedRoles={["mps"]}>
                         <MainLayout><MpsPanel /></MainLayout>
-                    </ProtectedRoute>
+                    //</ProtectedRoute>
                 }
             />
         </Routes>

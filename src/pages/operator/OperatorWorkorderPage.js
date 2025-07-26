@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+//belli bir workstation ın bütün workorder ları
 const OperatorWorkorderPage = () => {
   const [workorders, setWorkorders] = useState([]);
   const [selectedWorkorder, setSelectedWorkorder] = useState(null);
@@ -11,7 +12,9 @@ const OperatorWorkorderPage = () => {
   const [operatorId, setOperatorId] = useState(1); 
   const navigate = useNavigate();
 
-  const workstationId = localStorage.getItem("workstationId");
+    //const workstationId = localStorage.getItem("workstationId");
+    const workstationId = 1;
+    console.log("workstationId alindi, " + workstationId);
 
   useEffect(() => {
     if (!workstationId) return;

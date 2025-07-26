@@ -4,12 +4,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const OperatorWorkorderDetailPage = () => {
-  const { workorderId } = useParams();
+    //const { workorderId } = useParams();
+    const workorderId = 3;
   const navigate = useNavigate();
   const [performanceLogs, setPerformanceLogs] = useState([]);
   const [stateLogs, setStateLogs] = useState([]);
-  const [workstationId, setWorkstationId] = useState(localStorage.getItem("workstationId"));
-
+  //const [workstationId, setWorkstationId] = useState(localStorage.getItem("workstationId"));
+  const workstationId = 1
+  
   useEffect(() => {
     if (!workstationId || !workorderId) return;
 
