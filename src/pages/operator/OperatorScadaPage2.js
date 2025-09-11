@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { FaPause, FaCheck } from "react-icons/fa";
 import axios from "axios";
 import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 
 const OperatorScadaPage2 = () => {
@@ -13,6 +14,8 @@ const OperatorScadaPage2 = () => {
     const [selectedNewWorkorder, setSelectedNewWorkorder] = useState("");
     const [runningWorkorders, setRunningWorkorders] = useState([]);
     const [summary, setSummary] = useState({});
+    const navigate = useNavigate();
+
 
     //sonradan eklediklerim
     const [connection, setConnection] = useState(null);
@@ -110,7 +113,7 @@ const OperatorScadaPage2 = () => {
                     startupDowntime: workorder.total_startup_downtime,
                     plannedDowntime: workorder.total_planned_downtime,
                     unplannedDowntime: workorder.total_unplanned_downtime,
-                    netAvailableTime: workorder.total_unplanned_downtime,
+                    netAvailableTime: workorder.total_net_available_time,
                     totalNetOperationTime: workorder.total_net_operation_time,
                     currentEvent: workorder.CurrentScodeValue
                 });
@@ -168,6 +171,11 @@ const OperatorScadaPage2 = () => {
                 newScode: eventIdToSCode(selectedScode),
                 reason,
                 operatorId,
+            },
+                {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                }
             });
             alert("Event updated successfully.");
         } catch (err) {
@@ -205,9 +213,25 @@ const OperatorScadaPage2 = () => {
         }
     };
 
-    const handleFinishWorkorder = () => {
-        alert("Workorder finished!");
+    const handleFinishWorkorder = async () => {
+        try {
+            // Backend'e API çağrısı
+            await axios.post(`http://localhost:5031/api/operator/${workstationId}/finish-workorder`,
+                {
+                    workstationId,
+                    operatorId,
+                    reason
+                });
+
+            alert("Workorder finished!");
+
+            // Sayfa değiştir → component unmount olur, useEffect cleanup çalışır
+            navigate("/operator/workorders/" + localStorage.getItem("workorderId"));
+        } catch (error) {
+            console.error("Workorder bitirme işlemi başarısız:", error);
+        }
     };
+
 
     return (
         <div className="p-6 font-sans grid grid-cols-12 gap-6">

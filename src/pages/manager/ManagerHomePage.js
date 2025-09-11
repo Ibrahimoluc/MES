@@ -25,8 +25,8 @@ const ManagerHomePage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const summaryRes = await axios.get("http://localhost:5143/api/workstations/summary");
-        const trendRes = await axios.get("http://localhost:5143/api/workstations/performance-logs/summary"); // bu endpoint backendde yoksa kaldır
+        const summaryRes = await axios.get("http://localhost:5031/api/workstations/summary");
+        const trendRes = await axios.get("http://localhost:5031/api/workstations/performance-logs/summary"); // bu endpoint backendde yoksa kaldır
 
         setSummary({
           totalStations: summaryRes.data.length,

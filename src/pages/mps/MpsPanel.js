@@ -11,11 +11,12 @@ const MpsPanel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [usersRes, workstationsRes] = await Promise.all([
-          api.get("/users"),
-          api.get("/workstations"),
-        ]);
-        setUsers(usersRes.data);
+        //const [usersRes, workstationsRes] = await Promise.all([
+        //  //api.get("/users"),
+        //    api.get("http://localhost:5031/api/workstations/1"),
+          //]);
+          const workstationsRes = await api.get("http://localhost:5031/api/workstations/1");
+        //setUsers(usersRes.data);
         setWorkstations(workstationsRes.data);
       } catch (err) {
         setError("Veriler yüklenirken bir hata oluştu.");

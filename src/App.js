@@ -19,11 +19,19 @@ import ManagerTrackWorkerPage from "./pages/manager/ManagerTrackWorkerPage";
 import ManagerWorkstationDetailsPage from "./pages/manager/ManagerWorkstationDetailsPage";
 
 // MPS Page (tek sayfa var)
-import MpsPanel from "./pages/mps/MpsPanel";
+//import MpsPanel from "./pages/mps/MpsPanel";
+import MpsPanel2 from "./pages/mps/MpsPanel2";
+
 
 // Layout
 import MainLayout from "./components/layouts/MainLayout";
 import Deneme from "./pages/operator/Deneme";
+import CreateProductPage from "./pages/mps/CreateProductPage";
+import CreateWorkorderPage from "./pages/mps/CreateWorkorderPage";
+import PerfLogsPage from "./pages/manager/PerfLogsPage";
+import ManagerHomePage2 from "./pages/manager/ManagerHomePage2";
+import WorkstationPerfLogsPage from "./pages/manager/WorkstationPerfLogsPage";
+
 
 const getUserRole = () => localStorage.getItem("role");
 
@@ -41,9 +49,9 @@ const App = () => {
             <Route
                 path="/operator"
                 element={
-                    //<ProtectedRoute allowedRoles={["operator"]}>
+                    <ProtectedRoute allowedRoles={["operator"]}>
                         <MainLayout><OperatorHomePage /></MainLayout>
-                    //</ProtectedRoute>
+                    </ProtectedRoute>
                 }
             />
 
@@ -113,7 +121,7 @@ const App = () => {
                 path="/manager"
                 element={
                     //<ProtectedRoute allowedRoles={["manager"]}>
-                        <MainLayout><ManagerHomePage /></MainLayout>
+                        <MainLayout><ManagerHomePage2 /></MainLayout>
                     //</ProtectedRoute>
                 }
             />
@@ -134,12 +142,56 @@ const App = () => {
                 }
             />
 
+            <Route
+                path="/manager/workorder/perflogs"
+                element={
+                    //<ProtectedRoute allowedRoles={["operator"]}>
+                    <MainLayout><PerfLogsPage /></MainLayout>
+                    //</ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/manager/workstation/perflogs"
+                element={
+                    //<ProtectedRoute allowedRoles={["operator"]}>
+                    <MainLayout><WorkstationPerfLogsPage /></MainLayout>
+                    //</ProtectedRoute>
+                }
+            />
+
             {/* MPS Panel */}
+            {/*<Route*/}
+            {/*    path="/mps"*/}
+            {/*    element={*/}
+            {/*        //<ProtectedRoute allowedRoles={["mps"]}>*/}
+            {/*            <MainLayout><MpsPanel /></MainLayout>*/}
+            {/*        //</ProtectedRoute>*/}
+            {/*    }*/}
+            {/*/>*/}
             <Route
                 path="/mps"
                 element={
                     //<ProtectedRoute allowedRoles={["mps"]}>
-                        <MainLayout><MpsPanel /></MainLayout>
+                    <MainLayout><MpsPanel2 /></MainLayout>
+                    //</ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/mps/createProduct"
+                element={
+                    //<ProtectedRoute allowedRoles={["mps"]}>
+                    <MainLayout><CreateProductPage /></MainLayout>
+                    //</ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/mps/createWorkorder"
+                element={
+                    //<ProtectedRoute allowedRoles={["mps"]}>
+                    <MainLayout><CreateWorkorderPage /></MainLayout>
                     //</ProtectedRoute>
                 }
             />

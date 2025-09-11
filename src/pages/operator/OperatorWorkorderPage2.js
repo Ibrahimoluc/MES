@@ -31,6 +31,25 @@ const OperatorWorkorderPage2 = () => {
         }
     }
 
+    const sCodeToStatusName = (sCode) => {
+        switch (sCode) {
+            case 33:
+                return "Production";
+            case 42:
+                return "UnPlannedDowntime";
+            case 21:
+                return "PlannedDowntime";
+            case 10:
+                return "StartupDowntime";
+            case 50:
+                return "NotStarted";
+            case 60:
+                return "Completed"
+            case 70:
+                return "Suspended"
+        }
+    }
+
     useEffect(() => {
         if (!workstationId) return;
 
@@ -86,7 +105,11 @@ const OperatorWorkorderPage2 = () => {
 
             await axios.post(
                 `http://localhost:5031/api/operator/${workstationId}/activate-workorder`,
-                payload
+                payload, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                }
+            }
             );
 
             //navigate(`/operator/workorders/${selectedWorkorder.workorderId}`);
@@ -109,14 +132,16 @@ const OperatorWorkorderPage2 = () => {
                         key={wo.workorderId}
                         onClick={() => setSelectedWorkorder(wo)}
                         className={`cursor-pointer rounded border px-4 py-3 shadow-sm hover:shadow-md transition flex justify-between items-center ${selectedWorkorder?.workorderId === wo.workorderId
-                                ? "bg-blue-50 border-blue-400"
-                                : "bg-white border-gray-200"
+                            ? "bg-blue-50 border-blue-400"
+                            : "bg-white border-gray-200"
                             }`}
                     >
                         <div>
                             <div className="text-lg font-semibold text-gray-800">#{wo.workorderId}</div>
-                            <div className="text-sm text-gray-600">SCODE: {wo.currentScodeValue}</div>
+                            <div className="text-sm text-gray-600">SCODE: {sCodeToStatusName(wo.currentScodeValue)}</div>
                         </div>
+
+
                         <span
                             className={`text-xs font-medium px-3 py-1 rounded-full ${wo.isActive ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
                                 }`}
@@ -163,6 +188,13 @@ const OperatorWorkorderPage2 = () => {
                                 className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
                             >
                                 Start Workorder
+                            </button>
+
+                            <button
+                                    className={"bg-blue-600 text-white px-6 py-2 ml-4 rounded hover:bg-blue-700 transition"}
+                                    onClick={() => navigate("/operator/workorders/" + selectedWorkorder.workorderId)}
+                            >
+                                Details
                             </button>
                         </div>
                     </>

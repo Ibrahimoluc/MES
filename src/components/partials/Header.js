@@ -8,14 +8,16 @@ const Header = () => {
 
   const menu = {
     operator: [
-      { label: "Home", to: "/operator" },
-      { label: "Workorders", to: "/operator/workorders" },
-      { label: "SCADA", to: "/operator/scada" },
+      { label: "Home", to: "/operator2" },
+      { label: "Workorders", to: "/operator/workorders2" },
+      { label: "SCADA", to: "/operator/scada2" },
     ],
     manager: [
       { label: "Home", to: "/manager" },
       { label: "Track Workers", to: "/manager/workers" },
-      { label: "Workstation Details", to: "/manager/workstations" },
+      /*{ label: "Workstation Details", to: "/manager/workstations" }*/,
+      { label: "Workstation Details", to: "/manager/workstation/perflogs" },
+      { label: "Workorder Details", to: "/manager/workorder/perflogs" }
     ],
     mps: [
       { label: "MPS Panel", to: "/mps" },

@@ -16,12 +16,15 @@ const LoginPage = () => {
 
     try {
       setLoading(true);
-      const res = await api.post("/auth/login", {
+        const res = await api.post("http://localhost:5031/Authenticate/login", {
         username,
         password,
-      });
-
+        });
+ 
       const { token, role } = res.data;
+        console.log("token:" + token);
+        console.log("role:" + role);
+
 
       if (!role) {
         alert("Role info missing from response");
@@ -37,7 +40,7 @@ const LoginPage = () => {
       // Yönlendir
       switch (role) {
         case "operator":
-          navigate("/operator");
+          navigate("/operator2");
           break;
         case "manager":
           navigate("/manager");
