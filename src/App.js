@@ -7,30 +7,23 @@ import OperatorHomePage from "./pages/operator/OperatorHomePage";
 import OperatorWorkorderPage from "./pages/operator/OperatorWorkorderPage";
 import OperatorWorkorderDetailPage from "./pages/operator/OperatorWorkorderDetailPage";
 import OperatorScadaPage from "./pages/operator/OperatorScadaPage";
-import OperatorScadaPage2 from "./pages/operator/OperatorScadaPage2";
-import OperatorWorkorderPage2 from "./pages/operator/OperatorWorkorderPage2";
-import OperatorHomePage2 from "./pages/operator/OperatorHomePage2";
-
-
+import Deneme from "./pages/operator/Deneme";
 
 // Manager Pages
 import ManagerHomePage from "./pages/manager/ManagerHomePage";
 import ManagerTrackWorkerPage from "./pages/manager/ManagerTrackWorkerPage";
+import WorkstationPerfLogsPage from "./pages/manager/WorkstationPerfLogsPage";
 import ManagerWorkstationDetailsPage from "./pages/manager/ManagerWorkstationDetailsPage";
+import PerfLogsPage from "./pages/manager/PerfLogsPage";
 
-// MPS Page (tek sayfa var)
+// MPS Pages
 //import MpsPanel from "./pages/mps/MpsPanel";
 import MpsPanel2 from "./pages/mps/MpsPanel2";
-
+import CreateProductPage from "./pages/mps/CreateProductPage";
+import CreateWorkorderPage from "./pages/mps/CreateWorkorderPage";
 
 // Layout
 import MainLayout from "./components/layouts/MainLayout";
-import Deneme from "./pages/operator/Deneme";
-import CreateProductPage from "./pages/mps/CreateProductPage";
-import CreateWorkorderPage from "./pages/mps/CreateWorkorderPage";
-import PerfLogsPage from "./pages/manager/PerfLogsPage";
-import ManagerHomePage2 from "./pages/manager/ManagerHomePage2";
-import WorkstationPerfLogsPage from "./pages/manager/WorkstationPerfLogsPage";
 
 
 const getUserRole = () => localStorage.getItem("role");
@@ -56,14 +49,6 @@ const App = () => {
             />
 
             <Route
-                path="/operator2"
-                element={
-                    //<ProtectedRoute allowedRoles={["operator"]}>
-                    <MainLayout><OperatorHomePage2 /></MainLayout>
-                    //</ProtectedRoute>
-                }
-            />
-            <Route
                 path="/operator/workorders"
                 element={
                     //<ProtectedRoute allowedRoles={["operator"]}>
@@ -72,14 +57,6 @@ const App = () => {
                 }
             />
 
-            <Route
-                path="/operator/workorders2"
-                element={
-                    //<ProtectedRoute allowedRoles={["operator"]}>
-                    <MainLayout><OperatorWorkorderPage2 /></MainLayout>
-                    //</ProtectedRoute>
-                }
-            />
 
             <Route
                 path="/operator/workorders/:workorderId"
@@ -98,14 +75,6 @@ const App = () => {
                 }
             />
 
-            <Route
-                path="/operator/scada2"
-                element={
-                    //<ProtectedRoute allowedRoles={["operator"]}>
-                    <MainLayout><OperatorScadaPage2 /></MainLayout>
-                    //</ProtectedRoute>
-                }
-            />
 
             <Route
                 path="/operator/deneme"
@@ -121,7 +90,7 @@ const App = () => {
                 path="/manager"
                 element={
                     //<ProtectedRoute allowedRoles={["manager"]}>
-                        <MainLayout><ManagerHomePage2 /></MainLayout>
+                        <MainLayout><ManagerHomePage /></MainLayout>
                     //</ProtectedRoute>
                 }
             />

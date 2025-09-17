@@ -40,7 +40,7 @@ const LoginPage = () => {
       // Yönlendir
       switch (role) {
         case "operator":
-          navigate("/operator2");
+          navigate("/operator");
           break;
         case "manager":
           navigate("/manager");

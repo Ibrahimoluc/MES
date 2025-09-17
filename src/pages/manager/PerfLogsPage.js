@@ -1,7 +1,11 @@
 ﻿import React, { useEffect, useMemo, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+/*import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";*/
 import { RefreshCw } from "lucide-react";
 import api from "../../api"; // axios instance
+
+import LogSummaryCard from "./LogSummaryCard";
+import PerfLogGraph from "../../components/PerfLogGraph";
+import { aggregate, arrangeLines } from "../../components/commonFunctions";
 
 export default function PerfLogsPage() {
     const [workorderId, setWorkorderId] = useState(() => localStorage.getItem("workorderId") || "");
@@ -37,61 +41,14 @@ export default function PerfLogsPage() {
         }
     }
 
-    const aggregated = useMemo(() => {
-        if (!rawData?.length) return [];
+    //const aggregated = useMemo(() => {
+    //    return aggregate(rawData, scale);
 
-        const baseSeconds = 5;
-        const windowSec = baseSeconds * (Number(scale) || 1);
+    //}, [rawData, scale]);
 
-        const withTs = rawData
-            .map(d => ({ ...d, ts: new Date(d.recordedAt).getTime() }))
-            .sort((a, b) => a.ts - b.ts);
-
-        const startTs = withTs[0].ts;
-        const bucketMap = new Map();
-
-        for (const item of withTs) {
-            const idx = Math.floor((item.ts - startTs) / (windowSec * 1000));
-            if (!bucketMap.has(idx)) bucketMap.set(idx, []);
-            bucketMap.get(idx).push(item);
-        }
-
-        return Array.from(bucketMap.entries())
-            .sort((a, b) => a[0] - b[0])
-            .map(([idx, items]) => {
-                const avg = key => items.reduce((sum, it) => sum + (Number(it[key]) || 0), 0) / items.length;
-                const meanTs = items.reduce((sum, it) => sum + it.ts, 0) / items.length;
-
-                return {
-                    recordedAt: new Date(meanTs).toISOString(),
-                    oee: round2(avg("oee")),
-                    availability: round2(avg("availability")),
-                    performance: round2(avg("performance")),
-                    quality: round2(avg("quality")),
-                };
-            });
-    }, [rawData, scale]);
-
-    function round2(n) {
-        return Math.round((Number(n) || 0) * 100) / 100;
-    }
-
-    const formatTime = iso => {
-        try {
-            const d = new Date(iso);
-            return d.toLocaleTimeString([], { hour12: false });
-        } catch {
-            return iso;
-        }
-    };
 
     const lines = useMemo(() => {
-        const colors = { oee: "#1f77b4", availability: "#ff7f0e", performance: "#2ca02c", quality: "#d62728" };
-        const out = [];
-        for (const [key, label] of Object.entries({ oee: "OEE", availability: "Availability", performance: "Performance", quality: "Quality" })) {
-            if (selectedMetrics[key]) out.push({ key, label, color: colors[key] });
-        }
-        return out;
+        return arrangeLines(selectedMetrics)
     }, [selectedMetrics]);
 
     return (
@@ -159,33 +116,12 @@ export default function PerfLogsPage() {
             <div className="bg-white p-4 rounded shadow overflow-x-auto">
                 <h3 className="text-lg font-semibold mb-4">Zaman Serisi Grafiği</h3>
                 <div className="w-full h-[360px] min-w-[800px]">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <LineChart data={aggregated} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis
-                                dataKey="recordedAt"
-                                tickFormatter={formatTime}
-                                tick={{ fontSize: 10, angle: -45, textAnchor: "end" }}
-                                interval={0}
-                            />
-                            <YAxis domain={[0, 200]} />
-                            <Tooltip labelFormatter={label => new Date(label).toLocaleString()} />
-                            <Legend />
-                            {lines.map(ln => (
-                                <Line key={ln.key} type="monotone" dataKey={ln.key} name={ln.label} dot={false} stroke={ln.color} strokeWidth={2} isAnimationActive={false} />
-                            ))}
-                        </LineChart>
-                    </ResponsiveContainer>
+                    <PerfLogGraph data={rawData} lines={lines} scale={scale} />
                 </div>
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-                {summaryCards(aggregated).map(c => (
-                    <div key={c.label} className="bg-white rounded p-4 shadow text-center">
-                        <div className="text-sm text-gray-500">{c.label}</div>
-                        <div className="text-2xl font-bold">{c.value}</div>
-                    </div>
-                ))}
+                <LogSummaryCard data={rawData} />
             </div>
         </div>
     );

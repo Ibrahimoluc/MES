@@ -8,9 +8,9 @@ const Header = () => {
 
   const menu = {
     operator: [
-      { label: "Home", to: "/operator2" },
-      { label: "Workorders", to: "/operator/workorders2" },
-      { label: "SCADA", to: "/operator/scada2" },
+      { label: "Home", to: "/operator" },
+      /*{ label: "Workorders", to: "/operator/workorders" }*/,
+      /*{ label: "SCADA", to: "/operator/scada" },*/
     ],
     manager: [
       { label: "Home", to: "/manager" },
