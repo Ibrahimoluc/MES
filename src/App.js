@@ -21,6 +21,7 @@ import PerfLogsPage from "./pages/manager/PerfLogsPage";
 import MpsPanel2 from "./pages/mps/MpsPanel2";
 import CreateProductPage from "./pages/mps/CreateProductPage";
 import CreateWorkorderPage from "./pages/mps/CreateWorkorderPage";
+import CreateWorkstationPage from "./pages/mps/CreateWorkstationPage";
 
 // Layout
 import MainLayout from "./components/layouts/MainLayout";
@@ -161,6 +162,15 @@ const App = () => {
                 element={
                     //<ProtectedRoute allowedRoles={["mps"]}>
                     <MainLayout><CreateWorkorderPage /></MainLayout>
+                    //</ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/mps/createWorkstation"
+                element={
+                    //<ProtectedRoute allowedRoles={["mps"]}>
+                    <MainLayout><CreateWorkstationPage /></MainLayout>
                     //</ProtectedRoute>
                 }
             />

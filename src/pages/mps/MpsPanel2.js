@@ -51,6 +51,12 @@ const MpsPanel2 = () => {
                 >
                     🛠 Create Workorder
                 </button>
+                <button
+                    className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
+                    onClick={() => navigate("/mps/createWorkstation")}
+                >
+                    🏭 Create Workstation
+                </button>
             </div>
 
             {/* Workstation Listesi */}
