@@ -31,4 +31,5 @@ function LogSummaryCard(props) {
     )
 }
 
+//
 export default LogSummaryCard;
