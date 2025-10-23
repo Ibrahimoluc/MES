@@ -21,7 +21,7 @@ const CreateWorkstationPage = () => {
                 SerialNumber: serialNumber
             };
 
-            await api.post("http://localhost:5031/api/mps/workstations", payload);
+            await api.post(`${process.env.REACT_APP_API_URL}/api/mps/workstations`, payload);
 
             setMessage("✅ Workstation başarıyla oluşturuldu!");
             setName("");

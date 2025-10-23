@@ -12,7 +12,7 @@ const MpsPanel2 = () => {
     useEffect(() => {
         const fetchWorkstations = async () => {
             try {
-                const res = await api.get("http://localhost:5031/api/workstations/summary");
+                const res = await api.get(`${process.env.REACT_APP_API_URL}/api/workstations/summary`);
                 setWorkstations(res.data);
             } catch (err) {
                 setError("Workstation verileri yüklenirken bir hata oluştu.");

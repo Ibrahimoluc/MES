@@ -23,7 +23,7 @@ export default function WorkstationPerfLogsPage() {
     // Workstations çek
     useEffect(() => {
         axios
-            .get("http://localhost:5031/api/workstations/summary")
+            .get(`${process.env.REACT_APP_API_URL}/api/workstations/summary`)
             .then((res) => setWorkstations(res.data))
             .catch((err) => console.error("Workstation fetch error:", err));
     }, []);
@@ -39,7 +39,7 @@ export default function WorkstationPerfLogsPage() {
 
         axios
             .get(
-                `http://localhost:5031/api/manager/workstation/perflogs/${workstationId}?start=${encodeURIComponent(
+                `${process.env.REACT_APP_API_URL}/api/manager/workstation/perflogs/${workstationId}?start=${encodeURIComponent(
                     startDate
                 )}&finish=${encodeURIComponent(finishDate)}`
             )

@@ -14,7 +14,7 @@ const CreateProductPage = () => {
     useEffect(() => {
         const fetchStations = async () => {
             try {
-                const res = await api.get("http://localhost:5031/api/workstations/summary");
+                const res = await api.get(`${process.env.REACT_APP_API_URL}/api/workstations/summary`);
                 setStations(res.data);
             } catch (err) {
                 setError("İstasyonlar yüklenirken hata oluştu");
@@ -45,7 +45,7 @@ const CreateProductPage = () => {
         };
 
         try {
-            await api.post("http://localhost:5031/api/mps/create-product", payload);
+            await api.post(`${process.env.REACT_APP_API_URL}/api/mps/create-product`, payload);
             setSuccess("Ürün başarıyla oluşturuldu!");
             setName("");
             setStockUnit("");

@@ -56,7 +56,7 @@ const OperatorWorkorderPage = () => {
         const fetchWorkorders = async () => {
             try {
                 const res = await axios.get(
-                    `http://localhost:5031/api/workstations/${workstationId}/workorders`
+                    `${process.env.REACT_APP_API_URL}/api/workstations/${workstationId}/workorders`
                 );
                 setWorkorders(res.data);
             } catch (err) {

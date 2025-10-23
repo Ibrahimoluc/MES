@@ -15,7 +15,7 @@ const CreateWorkorderPage = () => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const res = await api.get("http://localhost:5031/api/mps/products");
+                const res = await api.get(`${process.env.REACT_APP_API_URL}/api/mps/products`);
                 setProducts(res.data);
             } catch (err) {
                 console.error("Ürünler alınamadı:", err);
@@ -37,7 +37,7 @@ const CreateWorkorderPage = () => {
                 productId: parseInt(productId, 10)
             };
 
-            await api.post("http://localhost:5031/api/mps/workorders", payload);
+            await api.post(`${process.env.REACT_APP_API_URL}/api/mps/workorders`, payload);
 
             setMessage("✅ Workorder başarıyla oluşturuldu!");
             setQuantity("");

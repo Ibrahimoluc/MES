@@ -46,7 +46,7 @@ const ManagerHomePage = () => {
         const fetchWorkstations = async () => {
             try {
                 //const res = await api.get("http://localhost:5031/api/workstations/summary");
-                const res = await api.get("http://localhost:5031/api/manager/workstation/active/perflogs/summary");
+                const res = await api.get(`${process.env.REACT_APP_API_URL}/api/manager/workstation/active/perflogs/summary`);
                 setWorkstations(res.data);
                 
             } catch (err) {

@@ -68,7 +68,7 @@ const OperatorScadaPage = () => {
         console.log("SignalR connection creating...");
         const signalR = require('@microsoft/signalr');
         const workorderId = localStorage.getItem("workorderId");
-        const urlString = "http://localhost:5031/myHub?workorderId=" + workorderId;
+        const urlString = `${process.env.REACT_APP_API_URL}/myHub?workorderId=` + workorderId;
         console.log(urlString)
 
         const newConnection = new signalR.HubConnectionBuilder()
@@ -166,7 +166,7 @@ const OperatorScadaPage = () => {
 
         console.log(eventIdToSCode(selectedScode));
         try {
-            await axios.post(`http://localhost:5031/api/operator/${workstationId}/change-scode`, {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/operator/${workstationId}/change-scode`, {
                 workstationId,
                 newScode: eventIdToSCode(selectedScode),
                 reason,
@@ -196,7 +196,7 @@ const OperatorScadaPage = () => {
 
         try {
             await axios.post(
-                `http://localhost:5031/api/operator/${workstationId}/activate-workorder`,
+                `${process.env.REACT_APP_API_URL}/api/operator/${workstationId}/activate-workorder`,
                 {
                     workstationId,
                     workorderId: parseInt(selectedNewWorkorder),
@@ -216,7 +216,7 @@ const OperatorScadaPage = () => {
     const handleFinishWorkorder = async () => {
         try {
             // Backend'e API çağrısı
-            await axios.post(`http://localhost:5031/api/operator/${workstationId}/finish-workorder`,
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/operator/${workstationId}/finish-workorder`,
                 {
                     workstationId,
                     operatorId,

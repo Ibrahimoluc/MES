@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaMicrochip } from "react-icons/fa";
 import axios from "axios";
 
+//KULLANILMIYOR
 const ManagerWorkstationDetailsPage = () => {
   const [workstations, setWorkstations] = useState([]);
   const [selectedStation, setSelectedStation] = useState(null);

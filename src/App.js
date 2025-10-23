@@ -34,6 +34,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
     return allowedRoles.includes(role) ? children : <Navigate to="/" />;
 };
 
+console.log("api:" + process.env.REACT_APP_API_URL)
 const App = () => {
     return (
         <Routes>

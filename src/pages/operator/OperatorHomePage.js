@@ -20,7 +20,7 @@ const OperatorHomePage = () => {
     useEffect(() => {
         const fetchWorkstations = async () => {
             try {
-                const res = await axios.get("http://localhost:5031/api/workstations/details");
+                const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/workstations/details`);
                 setWorkstations(res.data);
             } catch (error) {
                 console.error("Error fetching workstations:", error);

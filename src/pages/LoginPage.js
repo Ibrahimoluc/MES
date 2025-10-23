@@ -16,7 +16,7 @@ const LoginPage = () => {
 
     try {
       setLoading(true);
-        const res = await api.post("http://localhost:5031/Authenticate/login", {
+        const res = await api.post(`${process.env.REACT_APP_API_URL}/Authenticate/login`, {
         username,
         password,
         });

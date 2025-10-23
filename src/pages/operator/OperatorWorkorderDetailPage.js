@@ -19,10 +19,10 @@ const OperatorWorkorderDetailPage = () => {
       try {
         const [performanceRes, stateRes] = await Promise.all([
           axios.get(
-            `http://localhost:5031/api/workstations/${workstationId}/performance-logs`
+              `${process.env.REACT_APP_API_URL}/api/workstations/${workstationId}/performance-logs`
           ),
           axios.get(
-            `http://localhost:5031/api/workstations/workorders/${workorderId}/state-logs`
+              `${process.env.REACT_APP_API_URL}/workstations/workorders/${workorderId}/state-logs`
           ),
         ]);
 
