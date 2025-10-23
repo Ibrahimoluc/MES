@@ -1,7 +1,3 @@
-import { useState } from "react";
-
-
-
 function LogSummaryCard(props) {
     let list = [
         { label: "Veri Sayýsý", value: 0 },

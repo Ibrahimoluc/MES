@@ -1,15 +1,13 @@
-﻿import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import api from "../../api";
 import PerfLogGraph from "../../components/PerfLogGraph";
-import { foo } from "../../components/commonFunctions";
+
 
 //Example data for graphics
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-foo();
 
 const DATA = [];
 const base = 20;
@@ -23,7 +21,7 @@ for (let i = 0; i < 10; i++) {
             "performance": getRndInteger(40, 60),
             "quality": getRndInteger(40, 60)
         }
-    ); 
+    );
 }
 
 const colors = { oee: "#1f77b4", availability: "#ff7f0e", performance: "#2ca02c", quality: "#d62728" };
@@ -40,7 +38,6 @@ const ManagerHomePage = () => {
     const [workstations, setWorkstations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchWorkstations = async () => {
@@ -48,7 +45,7 @@ const ManagerHomePage = () => {
                 //const res = await api.get("http://localhost:5031/api/workstations/summary");
                 const res = await api.get(`${process.env.REACT_APP_API_URL}/api/manager/workstation/active/perflogs/summary`);
                 setWorkstations(res.data);
-                
+
             } catch (err) {
                 setError("Workstation verileri yüklenirken bir hata oluştu.");
                 console.error(err);
@@ -68,7 +65,7 @@ const ManagerHomePage = () => {
         return <div className="p-6 text-red-500">{error}</div>;
     }
 
-  
+
     return (
         <div className="p-6 max-w-screen-xl mx-auto font-sans">
             <h2 className="text-3xl font-bold mb-6">📋 Manager Panel</h2>
