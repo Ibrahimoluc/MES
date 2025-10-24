@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+//import React, { useEffect, useState } from "react";
+//import axios from "axios";
 //import signalR from "@microsoft/signalr/dist/browser/signalr.min.js";
 
 const Deneme = () => {
@@ -32,11 +32,11 @@ const Deneme = () => {
 
     //-------------axios-------------------------------------------
     //axios istegine token headerý eklemeyi deneme
-    const res = axios.get("http://localhost:5031/Authenticate/operator",
-        {
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token")
-        }});
+    //const res = axios.get("http://localhost:5031/Authenticate/operator",
+    //    {
+    //        headers: {
+    //            "Authorization": "Bearer " + localStorage.getItem("token")
+    //    }});
 
 
     return (

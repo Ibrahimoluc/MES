@@ -8,8 +8,8 @@ const OperatorWorkorderDetailPage = () => {
   const navigate = useNavigate();
   const [performanceLogs, setPerformanceLogs] = useState([]);
   const [stateLogs, setStateLogs] = useState([]);
-  const [workstationId, setWorkstationId] = useState(localStorage.getItem("workstationId"));
-  //const workstationId = 1
+  //const [workstationId, setWorkstationId] = useState(localStorage.getItem("workstationId"));
+  const workstationId = localStorage.getItem("workstationId")
   
    useEffect(() => {
     if (!workstationId || !workorderId) return;

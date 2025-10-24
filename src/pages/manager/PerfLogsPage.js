@@ -1,11 +1,11 @@
-﻿import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 /*import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";*/
 import { RefreshCw } from "lucide-react";
 import api from "../../api"; // axios instance
 
 import LogSummaryCard from "./LogSummaryCard";
 import PerfLogGraph from "../../components/PerfLogGraph";
-import { aggregate, arrangeLines } from "../../components/commonFunctions";
+import { arrangeLines } from "../../components/commonFunctions";
 
 export default function PerfLogsPage() {
     const [workorderId, setWorkorderId] = useState(() => localStorage.getItem("workorderId") || "");
@@ -24,7 +24,7 @@ export default function PerfLogsPage() {
 
     useEffect(() => {
         if (workorderId) fetchData(workorderId);
-    }, []);
+    }, [workorderId]);
 
     async function fetchData(id) {
         setLoading(true);
@@ -41,10 +41,6 @@ export default function PerfLogsPage() {
         }
     }
 
-    //const aggregated = useMemo(() => {
-    //    return aggregate(rawData, scale);
-
-    //}, [rawData, scale]);
 
 
     const lines = useMemo(() => {
@@ -127,22 +123,22 @@ export default function PerfLogsPage() {
     );
 }
 
-function summaryCards(data) {
-    if (!data?.length) {
-        return [
-            { label: "Veri Sayısı", value: 0 },
-            { label: "Başlangıç", value: "-" },
-            { label: "Bitiş", value: "-" },
-            { label: "Aralık", value: "-" },
-        ];
-    }
-    const first = new Date(data[0].recordedAt);
-    const last = new Date(data[data.length - 1].recordedAt);
-    const minutes = Math.max(0, Math.round((last - first) / 60000));
-    return [
-        { label: "Veri Sayısı", value: data.length },
-        { label: "Başlangıç", value: first.toLocaleString() },
-        { label: "Bitiş", value: last.toLocaleString() },
-        { label: "Aralık", value: `${minutes} dk` },
-    ];
-}
+//function summaryCards(data) {
+//    if (!data?.length) {
+//        return [
+//            { label: "Veri Sayısı", value: 0 },
+//            { label: "Başlangıç", value: "-" },
+//            { label: "Bitiş", value: "-" },
+//            { label: "Aralık", value: "-" },
+//        ];
+//    }
+//    const first = new Date(data[0].recordedAt);
+//    const last = new Date(data[data.length - 1].recordedAt);
+//    const minutes = Math.max(0, Math.round((last - first) / 60000));
+//    return [
+//        { label: "Veri Sayısı", value: data.length },
+//        { label: "Başlangıç", value: first.toLocaleString() },
+//        { label: "Bitiş", value: last.toLocaleString() },
+//        { label: "Aralık", value: `${minutes} dk` },
+//    ];
+//}

@@ -1,4 +1,4 @@
-﻿
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -9,7 +9,8 @@ const OperatorWorkorderPage = () => {
     const [selectedWorkorder, setSelectedWorkorder] = useState(null);
     const [scodeGroups, setScodeGroups] = useState({});
     const [selectedScode, setSelectedScode] = useState(10);
-    const [operatorId, setOperatorId] = useState(1);
+    //const [operatorId, setOperatorId] = useState(1);
+    const operatorId = 1;
     const navigate = useNavigate();
 
     const workstationId = localStorage.getItem("workstationId");
@@ -28,6 +29,8 @@ const OperatorWorkorderPage = () => {
                 return 42;
             case 3:
                 return 33;
+            default:
+                alert("This is not a valid code");
         }
     }
 
@@ -47,6 +50,8 @@ const OperatorWorkorderPage = () => {
                 return "Completed"
             case 70:
                 return "Suspended"
+            default:
+                alert("The status code is not valid");
         }
     }
 

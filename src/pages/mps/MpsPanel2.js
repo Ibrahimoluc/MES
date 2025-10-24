@@ -1,4 +1,4 @@
-﻿// src/pages/MpsPanel.js
+// src/pages/MpsPanel.js
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";

@@ -1,8 +1,8 @@
-﻿// ✅ OperatorScadaPage.js - backend uyumlu hale getirildi
+// ✅ OperatorScadaPage.js - backend uyumlu hale getirildi
 import React, { useEffect, useState } from "react";
 import { FaPause, FaCheck } from "react-icons/fa";
 import axios from "axios";
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 
@@ -11,28 +11,29 @@ const OperatorScadaPage = () => {
     const [selectedScode, setSelectedScode] = useState(localStorage.getItem("initialSCode")); // default: startup downtime
     const [reason, setReason] = useState("");
     const [showModal, setShowModal] = useState(false);
-    const [selectedNewWorkorder, setSelectedNewWorkorder] = useState("");
-    const [runningWorkorders, setRunningWorkorders] = useState([]);
+    //const [selectedNewWorkorder, setSelectedNewWorkorder] = useState("");
+    //const [runningWorkorders, setRunningWorkorders] = useState([]);
     const [summary, setSummary] = useState({});
+    const [suspendReason, setSuspendReason] = useState("");
     const navigate = useNavigate();
 
 
     //sonradan eklediklerim
-    const [connection, setConnection] = useState(null);
-    const [workorderDetails, setWorkorderDetails] = useState({});
+    //const [connection, setConnection] = useState(null);
+    //const [workorderDetails, setWorkorderDetails] = useState({});
     const scodeGroups = {
         "STARTUP DOWNTIME": [
-            { id: 10, description: "MATERIAL AND EQUIPMENT PREPARATION"},
-            { id: 11, description: "SETUP"},
+            { id: 10, description: "MATERIAL AND EQUIPMENT PREPARATION" },
+            { id: 11, description: "SETUP" },
         ],
         "PLANNED DOWNTIME": [
-            { id: 21, description: "MAINTENANCE"},
-            { id: 22, description: "MEAL BREAK"},
-            { id: 23, description: "EDUCATION"},
+            { id: 21, description: "MAINTENANCE" },
+            { id: 22, description: "MEAL BREAK" },
+            { id: 23, description: "EDUCATION" },
         ],
         "UNPLANNED DOWNTIME": [
-            { id: 42, description: "MACHINE FAILURE"},
-            { id: 43, description: "LACK OF STAFF"},
+            { id: 42, description: "MACHINE FAILURE" },
+            { id: 43, description: "LACK OF STAFF" },
         ],
         PRODUCTION: [
             { id: 33, description: "PRODUCTION" },
@@ -131,8 +132,7 @@ const OperatorScadaPage = () => {
             console.log("connection is null");
         }
 
-        setConnection(newConnection);
-
+        //setConnection(newConnection);
 
         //Temizlik (component unmount olunca bağlantıyı kapat)
         return () => {
@@ -155,8 +155,10 @@ const OperatorScadaPage = () => {
                 return 42;
             case 3:
                 return 33;
+            default:
+                alert("There is a problem with Scodes. The eventId is not valid:" + eventId);
         }
-    } 
+    }
 
     const handleChangeEvent = async () => {
         if (!reason.trim()) {
@@ -173,10 +175,10 @@ const OperatorScadaPage = () => {
                 operatorId,
             },
                 {
-                headers: {
-                    "Authorization": "Bearer " + localStorage.getItem("token")
-                }
-            });
+                    headers: {
+                        "Authorization": "Bearer " + localStorage.getItem("token")
+                    }
+                });
             alert("Event updated successfully.");
         } catch (err) {
             console.error("SCODE update failed:", err);
@@ -184,34 +186,34 @@ const OperatorScadaPage = () => {
         }
     };
 
-    const handleSuspendWorkorder = () => {
-        setShowModal(true);
-    };
+    //const handleSuspendWorkorder = () => {
+    //    setShowModal(true);
+    //};
 
-    const handleStartNewWorkorder = async () => {
-        if (!selectedNewWorkorder || !selectedScode) {
-            alert("Please select workorder and SCODE.");
-            return;
-        }
+    //const handleStartNewWorkorder = async () => {
+    //    if (!selectedNewWorkorder || !selectedScode) {
+    //        alert("Please select workorder and SCODE.");
+    //        return;
+    //    }
 
-        try {
-            await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/operator/${workstationId}/activate-workorder`,
-                {
-                    workstationId,
-                    workorderId: parseInt(selectedNewWorkorder),
-                    initialScode: selectedScode,
-                    operatorId,
-                    reason,
-                }
-            );
-            alert("New workorder started successfully.");
-            setShowModal(false);
-        } catch (err) {
-            console.error("Activate workorder error:", err);
-            alert("Failed to activate new workorder.");
-        }
-    };
+    //    try {
+    //        await axios.post(
+    //            `${process.env.REACT_APP_API_URL}/api/operator/${workstationId}/activate-workorder`,
+    //            {
+    //                workstationId,
+    //                workorderId: parseInt(selectedNewWorkorder),
+    //                initialScode: selectedScode,
+    //                operatorId,
+    //                reason,
+    //            }
+    //        );
+    //        alert("New workorder started successfully.");
+    //        setShowModal(false);
+    //    } catch (err) {
+    //        console.error("Activate workorder error:", err);
+    //        alert("Failed to activate new workorder.");
+    //    }
+    //};
 
     const handleFinishWorkorder = async () => {
         try {
@@ -232,54 +234,102 @@ const OperatorScadaPage = () => {
         }
     };
 
+    const handleSuspendWorkorder = async () => {
+        const SCode = 70;
+        try {
+            // Backend'e API çağrısı
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/operator/${workstationId}/finish-workorder`,
+                {
+                    workstationId,
+                    operatorId,
+                    reason,
+                    SCode
+                });
+
+            alert("Workorder suspended!");
+
+            // Sayfa değiştir → component unmount olur, useEffect cleanup çalışır
+            navigate("/operator/workorders");
+        } catch (error) {
+            console.error("Workorder bitirme işlemi başarısız:", error);
+        }
+    };
+
 
     return (
         <div className="p-6 font-sans grid grid-cols-12 gap-6">
+            {/*{showModal && (*/}
+            {/*    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">*/}
+            {/*        <div className="bg-white p-6 rounded shadow-xl w-[90%] md:w-[500px]">*/}
+            {/*            <h2 className="text-xl font-bold mb-4">Suspend Current Workorder</h2>*/}
+            {/*            <label className="block text-sm font-medium mb-1">New Workorder</label>*/}
+            {/*            <select*/}
+            {/*                value={selectedNewWorkorder}*/}
+            {/*                onChange={(e) => setSelectedNewWorkorder(e.target.value)}*/}
+            {/*                className="w-full border rounded p-2 mb-4"*/}
+            {/*            >*/}
+            {/*                <option value="">Select a workorder</option>*/}
+            {/*                {runningWorkorders.map(({ workorderId }) => (*/}
+            {/*                    <option key={workorderId} value={workorderId}>*/}
+            {/*                        #{workorderId}*/}
+            {/*                    </option>*/}
+            {/*                ))}*/}
+            {/*            </select>*/}
+
+            {/*            <label className="block text-sm font-medium mb-1">Starting Event</label>*/}
+            {/*            <select*/}
+            {/*                value={selectedScode}*/}
+            {/*                onChange={(e) => setSelectedScode(parseInt(e.target.value))}*/}
+            {/*                className="w-full border rounded p-2 mb-4"*/}
+            {/*            >*/}
+            {/*                {Object.entries(scodeGroups).map(([group, items]) => (*/}
+            {/*                    <optgroup key={group} label={group}>*/}
+            {/*                        {items.map((item) => (*/}
+            {/*                            <option key={item.id} value={item.id}>*/}
+            {/*                                {item.description}*/}
+            {/*                            </option>*/}
+            {/*                        ))}*/}
+            {/*                    </optgroup>*/}
+            {/*                ))}*/}
+            {/*            </select>*/}
+
+            {/*            <div className="flex justify-end space-x-3 mt-2">*/}
+            {/*                <button onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">*/}
+            {/*                    Cancel*/}
+            {/*                </button>*/}
+            {/*                <button onClick={handleStartNewWorkorder} className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">*/}
+            {/*                    Start Workorder*/}
+            {/*                </button>*/}
+            {/*            </div>*/}
+            {/*        </div>*/}
+            {/*    </div>*/}
+            {/*)}*/}
+
             {showModal && (
                 <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded shadow-xl w-[90%] md:w-[500px]">
                         <h2 className="text-xl font-bold mb-4">Suspend Current Workorder</h2>
-                        <label className="block text-sm font-medium mb-1">New Workorder</label>
-                        <select
-                            value={selectedNewWorkorder}
-                            onChange={(e) => setSelectedNewWorkorder(e.target.value)}
-                            className="w-full border rounded p-2 mb-4"
-                        >
-                            <option value="">Select a workorder</option>
-                            {runningWorkorders.map(({ workorderId }) => (
-                                <option key={workorderId} value={workorderId}>
-                                    #{workorderId}
-                                </option>
-                            ))}
-                        </select>
 
-                        <label className="block text-sm font-medium mb-1">Starting Event</label>
-                        <select
-                            value={selectedScode}
-                            onChange={(e) => setSelectedScode(parseInt(e.target.value))}
-                            className="w-full border rounded p-2 mb-4"
-                        >
-                            {Object.entries(scodeGroups).map(([group, items]) => (
-                                <optgroup key={group} label={group}>
-                                    {items.map((item) => (
-                                        <option key={item.id} value={item.id}>
-                                            {item.description}
-                                        </option>
-                                    ))}
-                                </optgroup>
-                            ))}
-                        </select>
+                        <label className="text-sm font-medium">Reason</label>
+                        <textarea
+                            value={suspendReason}
+                            onChange={(e) => setSuspendReason(e.target.value)}
+                            rows={3}
+                            placeholder="Enter reason for suspend the workorder..."
+                            className="w-full border p-2 rounded"
+                        />
 
                         <div className="flex justify-end space-x-3 mt-2">
                             <button onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">
                                 Cancel
                             </button>
-                            <button onClick={handleStartNewWorkorder} className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
-                                Start Workorder
+                            <button onClick={handleSuspendWorkorder} className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700">
+                                Suspend
                             </button>
                         </div>
                     </div>
                 </div>
+
             )}
 
             <div className="col-span-3 bg-white p-6 rounded shadow space-y-4">
@@ -318,7 +368,8 @@ const OperatorScadaPage = () => {
             <div className="col-span-9 space-y-6">
                 <div className="flex justify-end gap-3">
                     <button
-                        onClick={handleSuspendWorkorder}
+                        //onClick={handleSuspendWorkorder}
+                        onClick={() => setShowModal(true)}
                         className="flex items-center gap-2 border border-blue-500 text-blue-500 px-4 py-2 rounded hover:bg-blue-50"
                     >
                         <FaPause /> Suspend Workorder

@@ -1,4 +1,4 @@
-﻿// ✅ OperatorHomePage.js (axios version)
+// ✅ OperatorHomePage.js (axios version)
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -51,7 +51,7 @@ const OperatorHomePage = () => {
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 px-4">
-            {(workstations.length == 0) ? <p>Workstation bulunamadı.</p> :
+            {(workstations.length === 0) ? <p>Workstation bulunamadı.</p> :
                 (workstations.map((ws, idx) => (
                     <div
                         key={idx}

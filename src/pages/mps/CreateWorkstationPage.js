@@ -1,5 +1,5 @@
-﻿// src/pages/CreateWorkorderPage.js
-import React, { useState, useEffect } from "react";
+// src/pages/CreateWorkorderPage.js
+import React, { useState } from "react";
 import api from "../../api"; // axios instance
 
 const CreateWorkstationPage = () => {
