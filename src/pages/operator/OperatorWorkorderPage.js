@@ -109,7 +109,7 @@ const OperatorWorkorderPage = () => {
             };
 
             await axios.post(
-                `http://localhost:5031/api/operator/${workstationId}/activate-workorder`,
+                `${process.env.REACT_APP_API_URL}/api/operator/${workstationId}/activate-workorder`,
                 payload, {
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("token")
