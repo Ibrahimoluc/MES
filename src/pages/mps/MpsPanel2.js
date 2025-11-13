@@ -7,12 +7,14 @@ const MpsPanel2 = () => {
     const [workstations, setWorkstations] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [products, setProducts] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchWorkstations = async () => {
             try {
-                const res = await api.get(`${process.env.REACT_APP_API_URL}/api/workstations/summary`);
+                //const res = await api.get(`${process.env.REACT_APP_API_URL}/api/workstations/summary`);
+                const res = await api.get(`${process.env.REACT_APP_API_URL}/api/mps/workstations-summary`);
                 setWorkstations(res.data);
             } catch (err) {
                 setError("Workstation verileri yüklenirken bir hata oluştu.");
@@ -22,7 +24,20 @@ const MpsPanel2 = () => {
             }
         };
 
+        const fetchProducts = async () => {
+            try {
+                const res = await api.get(`${process.env.REACT_APP_API_URL}/api/mps/products`);
+                setProducts(res.data);
+            } catch (err) {
+                setError("Production verileri yüklenirken bir hata oluştu.");
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        }
+
         fetchWorkstations();
+        fetchProducts();
     }, []);
 
     if (loading) {
@@ -59,32 +74,124 @@ const MpsPanel2 = () => {
                 </button>
             </div>
 
-            {/* Workstation Listesi */}
-            <div className="bg-white p-4 rounded shadow">
-                <h3 className="text-lg font-semibold mb-4">🏭 Workstation List</h3>
-                {workstations.length === 0 ? (
-                    <p>İş istasyonu bulunamadı.</p>
-                ) : (
-                    <table className="w-full text-sm border">
-                        <thead className="bg-gray-100">
-                            <tr>
-                                <th className="p-2 border">ID</th>
-                                <th className="p-2 border">Name</th>
-                                <th className="p-2 border">Serial Number</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {workstations.map((w) => (
-                                <tr key={w.id} className="text-center">
-                                    <td className="p-2 border">{w.id}</td>
-                                    <td className="p-2 border">{w.name}</td>
-                                    <td className="p-2 border">{w.serialNumber}</td>
+            <div className="space-y-8">
+
+                {/* Workstation Listesi */}
+                <div className="bg-white p-4 rounded shadow">
+                    <h3 className="text-lg font-semibold mb-4">🏭 Workstation List</h3>
+                    {workstations.length === 0 ? (
+                        <p>İş istasyonu bulunamadı.</p>
+                    ) : (
+                        <table className="w-full text-sm border">
+                            <thead className="bg-gray-100">
+                                <tr>
+                                    <th className="p-2 border">ID</th>
+                                    <th className="p-2 border">Name</th>
+                                    <th className="p-2 border">Serial Number</th>
+                                    <th className="p-2 border">Active Workorder</th>
+                                    <th className="p-2 border">Status</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                )}
+                            </thead>
+                            <tbody>
+                                {workstations.map((w) => (
+                                    <tr key={w.id} className="text-center">
+                                        <td className="p-2 border">{w.id}</td>
+                                        <td className="p-2 border">{w.name}</td>
+                                        <td className="p-2 border">{w.serialNumber}</td>
+                                        <td className="p-2 border">
+                                            {w.activeWorkorder ? `#${w.activeWorkorder.workorderId}` : "—"}
+                                        </td>
+                                        <td className="p-2 border">
+                                            {w.activeWorkorder ? "Active" : "Idle"}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+
+                {/* Workorder Listesi */}
+                <div className="bg-white p-4 rounded shadow">
+                    <h3 className="text-lg font-semibold mb-4">📦 Active Workorders</h3>
+
+                    {workstations.filter(w => w.activeWorkorder !== null).length === 0 ? (
+                        <p>Aktif iş emri bulunamadı.</p>
+                    ) : (
+                        <table className="w-full text-sm border">
+                            <thead className="bg-gray-100">
+                                <tr>
+                                    <th className="p-2 border">Workorder ID</th>
+                                    <th className="p-2 border">Workstation</th>
+                                    <th className="p-2 border">Serial</th>
+                                    <th className="p-2 border">Start Date</th>
+                                    <th className="p-2 border">Finish Date</th>
+                                    <th className="p-2 border">Takt Time</th>
+                                    <th className="p-2 border">Quantity</th>
+                                    <th className="p-2 border">Progress</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {workstations
+                                    .filter((w) => w.activeWorkorder !== null)
+                                    .map((w) => {
+                                        const wo = w.activeWorkorder;
+                                        return (
+                                            <tr key={wo.workorderId} className="text-center">
+                                                <td className="p-2 border">#{wo.workorderId}</td>
+                                                <td className="p-2 border">{w.name}</td>
+                                                <td className="p-2 border">{w.serialNumber}</td>
+                                                <td className="p-2 border">
+                                                    {new Date(wo.startDate).toLocaleString()}
+                                                </td>
+                                                <td className="p-2 border">
+                                                    {new Date(wo.finishDate).toLocaleString()}
+                                                </td>
+                                                <td className="p-2 border">{wo.taktTime}s</td>
+                                                <td className="p-2 border">{wo.quantity}</td>
+                                                <td className="p-2 border">
+                                                    {wo.currentScodeValue} / {wo.quantity}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+
+                {/* Product Listesi */}
+                <div className="bg-white p-4 rounded shadow">
+                    <h3 className="text-lg font-semibold mb-4">📦 Product List</h3>
+
+                    {products.length === 0 ? (
+                        <p>Ürün bulunamadı.</p>
+                    ) : (
+                        <table className="w-full text-sm border">
+                            <thead className="bg-gray-100">
+                                <tr>
+                                    <th className="p-2 border">ID</th>
+                                    <th className="p-2 border">Product Name</th>
+                                    <th className="p-2 border">Stock Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {products.map((p) => (
+                                    <tr key={p.id} className="text-center hover:bg-gray-50">
+                                        <td className="p-2 border">{p.id}</td>
+                                        <td className="p-2 border">{p.name}</td>
+                                        <td className="p-2 border">{p.stockUnit}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    )}
+                </div>
+
             </div>
+
+
+
         </div>
     );
 };

@@ -30,7 +30,7 @@ export default function PerfLogsPage() {
         setLoading(true);
         setError("");
         try {
-            const res = await api.get(`http://localhost:5031/api/manager/workorder/perflogs/${id}`);
+            const res = await api.get(`${process.env.REACT_APP_API_URL}/api/manager/workorder/perflogs/${id}`);
             setRawData(Array.isArray(res.data) ? res.data : []);
         } catch (err) {
             console.error(err);

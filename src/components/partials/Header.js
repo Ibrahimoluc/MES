@@ -12,9 +12,10 @@ const Header = () => {
     ],
     manager: [
       { label: "Home", to: "/manager" },
-      { label: "Track Workers", to: "/manager/workers" },
+      //{ label: "Track Workers", to: "/manager/workers" },
       { label: "Workstation Details", to: "/manager/workstation/perflogs" },
-      { label: "Workorder Details", to: "/manager/workorder/perflogs" }
+      { label: "Workorder Details", to: "/manager/workorder/perflogs" },
+      { label: "Workorders List", to: "/manager/workordersList" }
     ],
     mps: [
       { label: "MPS Panel", to: "/mps" },

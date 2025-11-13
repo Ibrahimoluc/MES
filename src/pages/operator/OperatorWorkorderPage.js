@@ -128,6 +128,12 @@ const OperatorWorkorderPage = () => {
         }
     };
 
+    const handleViewWorkorder = () => {
+        localStorage.setItem("workorderId", JSON.stringify(selectedWorkorder.workorderId));
+        localStorage.setItem("initialSCode", JSON.stringify(selectedScode));
+        navigate("/operator/scada");
+    }
+
     return (
         <div className="p-6 md:flex gap-6 font-sans">
             <div className="md:w-1/2 space-y-4">
@@ -188,16 +194,31 @@ const OperatorWorkorderPage = () => {
                         </div>
 
                         <div className="text-right">
-                            <button
-                                onClick={handleStartWorkorder}
-                                className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
-                            >
-                                Start Workorder
-                            </button>
+                            {/*<button*/}
+                            {/*    onClick={handleStartWorkorder}*/}
+                            {/*    className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"*/}
+                            {/*>*/}
+                            {/*    Start Workorder*/}
+                            {/*</button>*/}
+
+                            {selectedWorkorder.isActive ?
+                                (<button
+                                    onClick={handleViewWorkorder}
+                                    className="bg-yellow-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
+                                >
+                                    ViewWorkorder
+                                </button>)
+                                : (<button
+                                    onClick={handleStartWorkorder}
+                                    className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
+                                >
+                                    Start Workorder
+                                </button>)}
+
 
                             <button
-                                    className={"bg-blue-600 text-white px-6 py-2 ml-4 rounded hover:bg-blue-700 transition"}
-                                    onClick={() => navigate("/operator/workorders/" + selectedWorkorder.workorderId)}
+                                className={"bg-blue-600 text-white px-6 py-2 ml-4 rounded hover:bg-blue-700 transition"}
+                                onClick={() => navigate("/operator/workorders/" + selectedWorkorder.workorderId)}
                             >
                                 Details
                             </button>

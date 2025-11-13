@@ -19,18 +19,20 @@ const OperatorWorkorderDetailPage = () => {
       try {
         const [performanceRes, stateRes] = await Promise.all([
           axios.get(
-              `${process.env.REACT_APP_API_URL}/api/workstations/${workstationId}/performance-logs`
+              `${process.env.REACT_APP_API_URL}/api/workstations/workorders/${workorderId}/performance-logs`
           ),
           axios.get(
-              `${process.env.REACT_APP_API_URL}/workstations/workorders/${workorderId}/state-logs`
+              `${process.env.REACT_APP_API_URL}/api/workstations/workorders/${workorderId}/state-logs`
           ),
         ]);
 
         setPerformanceLogs(
-          performanceRes.data.filter((p) => p.workorderId === parseInt(workorderId))
+          //performanceRes.data.filter((p) => p.workorderId === parseInt(workorderId))
+          performanceRes.data
         );
         setStateLogs(
-          stateRes.data.filter((s) => s.workorderId === parseInt(workorderId))
+          //stateRes.data.filter((s) => s.workorderId === parseInt(workorderId))
+          stateRes.data
         );
       } catch (error) {
         console.error("Error fetching logs:", error);

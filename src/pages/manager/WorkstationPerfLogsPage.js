@@ -51,7 +51,7 @@ export default function WorkstationPerfLogsPage() {
                     return;
                 }
 
-                const baseInterval = 5000; // 5 sn
+                const baseInterval = 30*1000 + 5*1000; // bu log kayit periyodu + belli bir süre
                 const processed = data.map((d) => ({
                     ...d,
                     recordedAt: new Date(d.recordedAt).getTime(), // timestamp

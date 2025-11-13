@@ -25,6 +25,7 @@ import CreateWorkstationPage from "./pages/mps/CreateWorkstationPage";
 
 // Layout
 import MainLayout from "./components/layouts/MainLayout";
+import WorkorderListPage from "./pages/manager/WorkorderListPage";
 
 
 const getUserRole = () => localStorage.getItem("role");
@@ -128,6 +129,13 @@ const App = () => {
                     //<ProtectedRoute allowedRoles={["operator"]}>
                     <MainLayout><WorkstationPerfLogsPage /></MainLayout>
                     //</ProtectedRoute>
+                }
+            />
+
+            <Route
+                path="/manager/workordersList"
+                element={
+                    <MainLayout><WorkorderListPage /></MainLayout>
                 }
             />
 

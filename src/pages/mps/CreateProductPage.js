@@ -51,9 +51,27 @@ const CreateProductPage = () => {
             setStockUnit("");
             setStationTimes({});
         } catch (err) {
-            setError("Ürün oluşturulurken hata oluştu");
+            if (err.response && err.response.data) {
+                const data = err.response.data;
+
+                // Mesaj listesi oluştur
+                let errorMessage = data.message || "Bir hata oluştu.";
+
+                if (Array.isArray(data.errors) && data.errors.length > 0) {
+                    const detailedErrors = data.errors
+                        .map(e => `${e.field}: ${e.error}`)
+                        .join("\n");
+                    errorMessage += "\n" + detailedErrors;
+                }
+
+                setError(errorMessage);
+            } else {
+                setError("Sunucuyla iletişim kurulamadı.");
+            }
+
             console.error(err);
         }
+
     };
 
     if (loading) {
