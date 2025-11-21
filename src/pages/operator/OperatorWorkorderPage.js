@@ -63,7 +63,8 @@ const OperatorWorkorderPage = () => {
                 const res = await axios.get(
                     `${process.env.REACT_APP_API_URL}/api/workstations/${workstationId}/workorders`
                 );
-                setWorkorders(res.data);
+                console.log(res.data);
+                setWorkorders(res.data.filter(wo => wo.currentScodeValue !== 60));
             } catch (err) {
                 console.error("Failed to load workorders:", err);
             }
@@ -138,29 +139,34 @@ const OperatorWorkorderPage = () => {
         <div className="p-6 md:flex gap-6 font-sans">
             <div className="md:w-1/2 space-y-4">
                 <h2 className="text-2xl font-bold mb-2">Workorders</h2>
-                {workorders.map((wo) => (
-                    <div
-                        key={wo.workorderId}
-                        onClick={() => setSelectedWorkorder(wo)}
-                        className={`cursor-pointer rounded border px-4 py-3 shadow-sm hover:shadow-md transition flex justify-between items-center ${selectedWorkorder?.workorderId === wo.workorderId
-                            ? "bg-blue-50 border-blue-400"
-                            : "bg-white border-gray-200"
-                            }`}
-                    >
-                        <div>
-                            <div className="text-lg font-semibold text-gray-800">#{wo.workorderId}</div>
-                            <div className="text-sm text-gray-600">SCODE: {sCodeToStatusName(wo.currentScodeValue)}</div>
-                        </div>
-
-
-                        <span
-                            className={`text-xs font-medium px-3 py-1 rounded-full ${wo.isActive ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
+                {workorders.length === 0 ? (<p>No workorder found for this station</p>) : (
+                    workorders.map((wo) => (
+                        <div
+                            key={wo.workorderId}
+                            onClick={() => setSelectedWorkorder(wo)}
+                            className={`cursor-pointer rounded border px-4 py-3 shadow-sm hover:shadow-md transition flex justify-between items-center ${selectedWorkorder?.workorderId === wo.workorderId
+                                ? "bg-blue-50 border-blue-400"
+                                : "bg-white border-gray-200"
                                 }`}
                         >
-                            {wo.isActive ? "Active" : "Passive"}
-                        </span>
-                    </div>
-                ))}
+                            <div>
+                                <div className="text-lg font-semibold text-gray-800">#{wo.workorderId}</div>
+                                <div className="text-sm text-gray-600">SCODE: {sCodeToStatusName(wo.currentScodeValue)}</div>
+                                <div className="text-sm text-gray-600">StartDate: {new Date(wo.startDate).toLocaleString()}</div>
+                                <div className="text-sm text-gray-600">Finish Date: {new Date(wo.startDate).toLocaleString()}</div>
+                            </div>
+
+
+                            <span
+                                className={`text-xs font-medium px-3 py-1 rounded-full ${wo.isActive ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-600"
+                                    }`}
+                            >
+                                {wo.isActive ? "Active" : "Passive"}
+                            </span>
+                        </div>
+                    ))
+                )}
+                
             </div>
 
             <div className="md:w-1/2 bg-white rounded border shadow p-6 mt-6 md:mt-0">
