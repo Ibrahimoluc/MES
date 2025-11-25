@@ -83,9 +83,9 @@ export default function PerfLogsPage() {
                         value={scale}
                         onChange={e => setScale(parseInt(e.target.value, 10))}
                     >
-                        <option value={1}>1x (5 sn)</option>
-                        <option value={2}>2x (10 sn)</option>
-                        <option value={4}>4x (20 sn)</option>
+                        <option value={1}>1x (1 dakika)</option>
+                        <option value={2}>2x (2 dakika)</option>
+                        <option value={4}>4x (4 dakika)</option>
                     </select>
                 </div>
 

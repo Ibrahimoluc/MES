@@ -447,10 +447,10 @@ const OperatorScadaPage = () => {
                     <h4 className="font-semibold mb-2">Performance Indicators</h4>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {[
-                            { label: "Availability", value: summary.availability, color: "bg-yellow-500" },
-                            { label: "Performance", value: summary.performance, color: "bg-blue-500" },
-                            { label: "Quality", value: summary.quality, color: "bg-green-500" },
-                            { label: "OEE", value: summary.oee, color: "bg-red-500" },
+                            { label: "Availability", value: Number.parseFloat(summary.availability).toFixed(1), color: "bg-yellow-500" },
+                            { label: "Performance", value: Number.parseFloat(summary.performance).toFixed(1), color: "bg-blue-500" },
+                            { label: "Quality", value: Number.parseFloat(summary.quality).toFixed(1), color: "bg-green-500" },
+                            { label: "OEE", value: Number.parseFloat(summary.oee).toFixed(1), color: "bg-red-500" },
                         ].map((item, i) => (
                             <div key={i} className={`${item.color} text-white text-center rounded p-4`}>
                                 <h4 className="text-sm font-semibold">{item.label}</h4>

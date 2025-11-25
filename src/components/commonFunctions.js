@@ -9,7 +9,7 @@ function round2(n) {
 export function aggregate(rawData, scale=2) {
     if (!rawData?.length) return [];
 
-    const baseSeconds = 5;
+    const baseSeconds = 60;
     const windowSec = baseSeconds * (Number(scale) || 1);
 
     const withTs = rawData
@@ -24,7 +24,7 @@ export function aggregate(rawData, scale=2) {
         if (!bucketMap.has(idx)) bucketMap.set(idx, []);
         bucketMap.get(idx).push(item);
     }
-    console.log(rawData);
+    console.log(bucketMap);
 
     return Array.from(bucketMap.entries())
         .sort((a, b) => a[0] - b[0])

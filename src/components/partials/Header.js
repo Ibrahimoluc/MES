@@ -18,7 +18,10 @@ const Header = () => {
       { label: "Workorders List", to: "/manager/workordersList" }
     ],
     mps: [
-      { label: "MPS Panel", to: "/mps" },
+        { label: "MPS Panel", to: "/mps" },
+        { label: "Workstation Details", to: "/manager/workstation/perflogs" },
+        { label: "Workorder Details", to: "/manager/workorder/perflogs" },
+        { label: "Workorders List", to: "/manager/workordersList" }
     ],
   };
 

@@ -25,7 +25,7 @@ import CreateWorkstationPage from "./pages/mps/CreateWorkstationPage";
 
 // Layout
 import MainLayout from "./components/layouts/MainLayout";
-import WorkorderListPage from "./pages/manager/WorkorderListPage";
+import WorkorderListPage from "./components/WorkorderListPage";
 
 
 const getUserRole = () => localStorage.getItem("role");

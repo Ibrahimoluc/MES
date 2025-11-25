@@ -1,9 +1,9 @@
 function LogSummaryCard(props) {
     let list = [
-        { label: "Veri Sayýsý", value: 0 },
-        { label: "Baþlangýç", value: "-" },
-        { label: "Bitiþ", value: "-" },
-        { label: "Aralýk", value: "-" }];
+        { label: "Veri SayÄ±sÄ±", value: 0 },
+        { label: "BaÅŸlangÄ±Ã§", value: "-" },
+        { label: "BitiÅŸ", value: "-" },
+        { label: "AralÄ±k", value: "-" }];
     
     if (props.data?.length) {
         const data = props.data;
@@ -11,10 +11,10 @@ function LogSummaryCard(props) {
         const last = new Date(data[data.length - 1].recordedAt);
         const minutes = Math.max(0, Math.round((last - first) / 60000));
         list = [
-            { label: "Veri Sayýsý", value: data.length },
-            { label: "Baþlangýç", value: first.toLocaleString() },
-            { label: "Bitiþ", value: last.toLocaleString() },
-            { label: "Aralýk", value: `${minutes} dk` },
+            { label: "Veri SayÄ±sÄ±", value: data.length },
+            { label: "BaÅŸlangÄ±Ã§", value: first.toLocaleString() },
+            { label: "BitiÅŸ", value: last.toLocaleString() },
+            { label: "AralÄ±k", value: `${minutes} dk` },
         ];
     }
 
