@@ -9,12 +9,16 @@ function LogSummaryCard(props) {
         const data = props.data;
         const first = new Date(data[0].recordedAt);
         const last = new Date(data[data.length - 1].recordedAt);
+        const scraped = data[data.length - 1].badQuantity;
+        const totalProduced = data[data.length - 1].goodQuantity + scraped;
         const minutes = Math.max(0, Math.round((last - first) / 60000));
         list = [
             { label: "Veri Sayısı", value: data.length },
             { label: "Başlangıç", value: first.toLocaleString() },
             { label: "Bitiş", value: last.toLocaleString() },
             { label: "Aralık", value: `${minutes} dk` },
+            { label: "Total Produced", value: `${totalProduced}` },
+            { label: "Scraped", value: `${scraped}` },
         ];
     }
 
