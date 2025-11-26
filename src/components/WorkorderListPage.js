@@ -43,7 +43,34 @@ export default function WorkorderListPage() {
         fetchAllWorkordersSummary();
     }, []);
 
-    console.log(list);
+    //console.log(list);
+
+    const handleDelete = async (workorderId) => {
+        // Kullan c dan onay al ( ste e ba l  ama  nerilir)
+        if (!window.confirm("Bu iş emrini silmek istediğinize emin misiniz?")) {
+            return;
+        }
+
+        try {
+            // Controller yap n [HttpDelete("workorders")] oldu u i in
+            // ID'yi 'params' objesi i inde g nderiyoruz.
+            // Bu, URL'i  u hale getirir: /api/workorders?id=123
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/mps/workorders/${workorderId}`);
+
+            // 204 No Content ba ar s n  kontrol et
+            if (response.status === 204) {
+                console.log("Silme işlemi başarılı.");
+                setList(list.filter(item => item.workorderId !== workorderId));
+            }
+        } catch (error) {
+            if (error.response && error.response.status === 404) {
+                alert("Verilen ID ile bir iş emri bulunamadı.");
+            } else {
+                console.error("Silme işlemi sırasında bir hata oluştu:", error);
+                alert("Bir hata oluştu.");
+            }
+        }
+    };
 
     return (
         <>
@@ -51,7 +78,7 @@ export default function WorkorderListPage() {
             <div className="bg-white p-4 rounded shadow m-4">
                 <h3 className="text-lg font-semibold mb-4">Workorders List</h3>
                 {list.length === 0 ? (
-                    <p>  Emir bulunamad� .</p>
+                    <p>  Emir bulunamadı.</p>
                 ) : (
                     <table className="w-full text-sm border">
                         <thead className="bg-gray-100">
@@ -62,6 +89,7 @@ export default function WorkorderListPage() {
                                 <th className="p-2 border">StartDate</th>
                                 <th className="p-2 border">FinishDate</th>
                                 <th className="p-2 border">Status</th>
+                                <th className="p-2 border"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,6 +102,10 @@ export default function WorkorderListPage() {
                                         <td className="p-2 border">{new Date(w.startDate).toLocaleString()}</td>
                                         <td className="p-2 border">{new Date(w.finishDate).toLocaleString()}</td>
                                         <td className="p-2 border">{sCodeToStatusName(w.currentScodeValue)}</td>
+                                        <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow transition duration-200 ease-in-out"
+                                            onClick={(e) => { e.stopPropagation(); handleDelete(w.workorderId) }}>
+                                            Delete
+                                        </button>
                                     </tr>
                               ))}
                         </tbody>
