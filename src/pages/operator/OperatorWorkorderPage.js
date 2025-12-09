@@ -70,22 +70,41 @@ const OperatorWorkorderPage = () => {
             }
         };
 
+        //const predefinedScodes = {
+        //    "STARTUP DOWNTIME": [
+        //        { id: 10, description: "MATERIAL AND EQUIPMENT PREPARATION" },
+        //        { id: 11, description: "SETUP" },
+        //    ],
+        //    "PLANNED DOWNTIME": [
+        //        { id: 21, description: "MAINTENANCE" },
+        //        { id: 22, description: "MEAL BREAK" },
+        //        { id: 23, description: "EDUCATION" },
+        //    ],
+        //    "UNPLANNED DOWNTIME": [
+        //        { id: 42, description: "MACHINE FAILURE" },
+        //        { id: 43, description: "LACK OF STAFF" },
+        //    ],
+        //    PRODUCTION: [
+        //        { id: 33, description: "PRODUCTION" },
+        //    ]
+        //}
+
         const predefinedScodes = {
-            "STARTUP DOWNTIME": [
-                { id: 10, description: "MATERIAL AND EQUIPMENT PREPARATION" },
-                { id: 11, description: "SETUP" },
+            "BAŞLANGIÇ KESİNTİ": [
+                { id: 10, description: "EKİPMAN HAZIRLAMA" },
+                { id: 11, description: "KURULUM" },
             ],
-            "PLANNED DOWNTIME": [
-                { id: 21, description: "MAINTENANCE" },
-                { id: 22, description: "MEAL BREAK" },
-                { id: 23, description: "EDUCATION" },
+            "PLANLI KESİNTİ": [
+                { id: 21, description: "BAKIM" },
+                { id: 22, description: "YEMEK MOLASI" },
+                { id: 23, description: "EĞİTİM" },
             ],
-            "UNPLANNED DOWNTIME": [
-                { id: 42, description: "MACHINE FAILURE" },
-                { id: 43, description: "LACK OF STAFF" },
+            "PLANSIZ KESİNTİ": [
+                { id: 42, description: "MAKİNE ARIZASI" },
+                { id: 43, description: "EKSİK MALZEME" },
             ],
-            PRODUCTION: [
-                { id: 33, description: "PRODUCTION" },
+            ÜRETİM: [
+                { id: 33, description: "ÜRETİM" },
             ]
         }
 
@@ -212,13 +231,13 @@ const OperatorWorkorderPage = () => {
                                     onClick={handleViewWorkorder}
                                     className="bg-yellow-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
                                 >
-                                    ViewWorkorder
+                                    İş emrini gör
                                 </button>)
                                 : (<button
                                     onClick={handleStartWorkorder}
                                     className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
                                 >
-                                    Start Workorder
+                                    İş emrini başlat
                                 </button>)}
 
 
@@ -226,7 +245,7 @@ const OperatorWorkorderPage = () => {
                                 className={"bg-blue-600 text-white px-6 py-2 ml-4 rounded hover:bg-blue-700 transition"}
                                 onClick={() => navigate("/operator/workorders/" + selectedWorkorder.workorderId)}
                             >
-                                Details
+                                Detaylar
                             </button>
                         </div>
                     </>

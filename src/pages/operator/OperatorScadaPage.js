@@ -21,24 +21,44 @@ const OperatorScadaPage = () => {
     //sonradan eklediklerim
     //const [connection, setConnection] = useState(null);
     //const [workorderDetails, setWorkorderDetails] = useState({});
+    //const scodeGroups = {
+    //    "STARTUP DOWNTIME": [
+    //        { id: 10, description: "MATERIAL AND EQUIPMENT PREPARATION" },
+    //        { id: 11, description: "SETUP" },
+    //    ],
+    //    "PLANNED DOWNTIME": [
+    //        { id: 21, description: "MAINTENANCE" },
+    //        { id: 22, description: "MEAL BREAK" },
+    //        { id: 23, description: "EDUCATION" },
+    //    ],
+    //    "UNPLANNED DOWNTIME": [
+    //        { id: 42, description: "MACHINE FAILURE" },
+    //        { id: 43, description: "LACK OF STAFF" },
+    //    ],
+    //    PRODUCTION: [
+    //        { id: 33, description: "PRODUCTION" },
+    //    ]
+    //}
+
     const scodeGroups = {
-        "STARTUP DOWNTIME": [
-            { id: 10, description: "MATERIAL AND EQUIPMENT PREPARATION" },
-            { id: 11, description: "SETUP" },
+        "BAŞLANGIÇ KESİNTİ": [
+            { id: 10, description: "EKİPMAN HAZIRLAMA" },
+            { id: 11, description: "KURULUM" },
         ],
-        "PLANNED DOWNTIME": [
-            { id: 21, description: "MAINTENANCE" },
-            { id: 22, description: "MEAL BREAK" },
-            { id: 23, description: "EDUCATION" },
+        "PLANLI KESİNTİ": [
+            { id: 21, description: "BAKIM" },
+            { id: 22, description: "YEMEK MOLASI" },
+            { id: 23, description: "EĞİTİM" },
         ],
-        "UNPLANNED DOWNTIME": [
-            { id: 42, description: "MACHINE FAILURE" },
-            { id: 43, description: "LACK OF STAFF" },
+        "PLANSIZ KESİNTİ": [
+            { id: 42, description: "MAKİNE ARIZASI" },
+            { id: 43, description: "EKSİK MALZEME" },
         ],
-        PRODUCTION: [
-            { id: 33, description: "PRODUCTION" },
+        ÜRETİM: [
+            { id: 33, description: "ÜRETİM" },
         ]
     }
+
     //console.log(scodeGroups);
     //OperatorWorkorderPage den buraya navigate edilirken naviagete icinden alinan parametre
     const initialSCode = localStorage.getItem("initialSCode");
