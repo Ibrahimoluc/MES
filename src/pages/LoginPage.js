@@ -51,9 +51,27 @@ const LoginPage = () => {
         default:
           navigate("/");
       }
-    } catch (err) {
-      console.error("Login error:", err);
-      alert("Login failed. Please check your credentials.");
+    } catch (error) {
+        let errorMessage = "Bilinmeyen Hata";
+
+        if (error.response) {
+            // Sunucu cevap verdi ama hata kodu döndü (404, 500, 401 vs.)
+            // CORS hatası olsa bile bazen buraya düşmez, network error'a düşer.
+            errorMessage = `Server Error!\nStatus: ${error.response.status}\nData: ${JSON.stringify(error.response.data)}`;
+        } else if (error.request) {
+            // İstek atıldı ama sunucudan hiç cevap gelmedi
+            // CORS, Mixed Content, Private Network Access veya SSL hataları GENELLİKLE BURAYA DÜŞER.
+            errorMessage = `Network Error! (Sunucuya ulaşılamadı)\n${error.message}`;
+        } else {
+            // İstek oluşturulurken hata çıktı
+            errorMessage = `Request Error: ${error.message}`;
+        }
+
+        // Telefonda görebileceğin şekilde ekrana bas
+        alert(errorMessage);
+
+        // Konsola da basalım ki vConsole varsa orada da görünsün
+        console.error("Login Hatası Detayı:", error);
     } finally {
       setLoading(false);
     }
