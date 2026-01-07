@@ -32,8 +32,8 @@ const CreateWorkorderPage = () => {
         try {
             const payload = {
                 quantity: parseInt(quantity, 10),
-                startDate: new Date(startDate).toISOString(), // UTC format
-                finishDate: new Date(finishDate).toISOString(),
+                startDate: startDate, // UTC format
+                finishDate: finishDate ? new Date(finishDate).toISOString() : null,
                 productId: parseInt(productId, 10)
             };
 
@@ -88,7 +88,7 @@ const CreateWorkorderPage = () => {
                         type="datetime-local"
                         value={finishDate}
                         onChange={(e) => setFinishDate(e.target.value)}
-                        required
+                
                         className="w-full border p-2 rounded"
                     />
                 </div>

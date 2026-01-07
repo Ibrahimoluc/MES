@@ -128,11 +128,11 @@ const CreateProductPage = () => {
                                         <input
                                             type="number"
                                             className="w-20 border rounded p-1 text-center"
-                                            value={stationTimes[station.id] || ""}
+                                            value={stationTimes[station.id] ?? ""}
                                             onChange={(e) =>
                                                 handleStationTimeChange(station.id, e.target.value)
                                             }
-                                            min="0"
+                                            //min="0" // 0 o makinada çalışcak ama taktTime bilinmeyen icin girilen degerdir. 
                                         />
                                     </td>
                                 </tr>

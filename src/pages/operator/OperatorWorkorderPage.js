@@ -171,8 +171,8 @@ const OperatorWorkorderPage = () => {
                             <div>
                                 <div className="text-lg font-semibold text-gray-800">#{wo.workorderId}</div>
                                 <div className="text-sm text-gray-600">SCODE: {sCodeToStatusName(wo.currentScodeValue)}</div>
-                                <div className="text-sm text-gray-600">StartDate: {new Date(wo.startDate).toLocaleString()}</div>
-                                <div className="text-sm text-gray-600">Finish Date: {new Date(wo.finishDate).toLocaleString()}</div>
+                                <div className="text-sm text-gray-600">StartDate: {(wo.startDate) ? new Date(wo.startDate).toLocaleString() : ""}</div>
+                                <div className="text-sm text-gray-600">Finish Date: {(wo.finishDate) ? new Date(wo.finishDate).toLocaleString() : ""}</div>
                             </div>
 
 

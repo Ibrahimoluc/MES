@@ -100,7 +100,7 @@ export default function WorkorderListPage() {
                                         <td className="p-2 border">{w.workstationId}</td>
                                         <td className="p-2 border">{(w.isActive) ? "true" : "false"}</td>
                                         <td className="p-2 border">{new Date(w.startDate).toLocaleString()}</td>
-                                        <td className="p-2 border">{new Date(w.finishDate).toLocaleString()}</td>
+                                        <td className="p-2 border">{(w.finishDate) ? new Date(w.finishDate).toLocaleString() : "Belirlenmemiş"}</td>
                                         <td className="p-2 border">{sCodeToStatusName(w.currentScodeValue)}</td>
                                         <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded shadow transition duration-200 ease-in-out"
                                             onClick={(e) => { e.stopPropagation(); handleDelete(w.workorderId) }}>
